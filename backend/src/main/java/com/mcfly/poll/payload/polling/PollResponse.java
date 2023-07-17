@@ -11,7 +11,7 @@ public class PollResponse {
     private Long id;
     private String question;
     private List<ChoiceResponse> choices;
-    private UserSummary userSummary;
+    private UserSummary createdBy;
     private Instant creationDateTime;
     private Instant expirationDateTime;
     private Boolean isExpired;
@@ -44,12 +44,12 @@ public class PollResponse {
         this.choices = choices;
     }
 
-    public UserSummary getUserSummary() {
-        return userSummary;
+    public UserSummary getCreatedBy() {
+        return createdBy;
     }
 
-    public void setUserSummary(UserSummary userSummary) {
-        this.userSummary = userSummary;
+    public void setCreatedBy(UserSummary createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Instant getCreationDateTime() {
