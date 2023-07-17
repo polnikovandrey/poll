@@ -9,6 +9,16 @@ public class UserProfile {
     private String name;
     private Instant joinedAt;
 
+    public UserProfile() {
+    }
+
+    public UserProfile(Long id, String username, String name, Instant joinedAt) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.joinedAt = joinedAt;
+    }
+
     public Long getId() {
         return id;
     }
