@@ -34,13 +34,13 @@ public class JwtTokenProvider {
     }
 
     public Long getUserIdFromJWT(String token) {
-        final Claims claims = Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJwt(token).getBody();        // TODO deprecated
+        final Claims claims = Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(token).getBody();        // TODO deprecated
         return Long.parseLong(claims.getSubject());
     }
 
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJwt(authToken);
+            Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(authToken).getBody();        // TODO deprecated
             return true;
         } catch (SignatureException exception) {
             logger.error("Invalid JWT signature");
