@@ -4,6 +4,8 @@ create table roles
     id   bigint not null auto_increment primary key,
     name enum ('ROLE_ADMIN','ROLE_USER') unique
 ) engine = InnoDB;
+insert into roles(name) values ('ROLE_USER');
+insert into roles(name) values ('ROLE_ADMIN');
 drop table if exists users;
 create table users
 (

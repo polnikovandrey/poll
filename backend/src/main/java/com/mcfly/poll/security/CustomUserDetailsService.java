@@ -2,6 +2,7 @@ package com.mcfly.poll.security;
 
 import com.mcfly.poll.domain.User;
 import com.mcfly.poll.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    @Autowired
     UserRepository userRepository;
 
     @Override
