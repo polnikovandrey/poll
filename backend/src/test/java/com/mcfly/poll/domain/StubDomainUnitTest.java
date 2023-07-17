@@ -2,7 +2,7 @@ package com.mcfly.poll.domain;
 
 public class StubDomainUnitTest {
 
-// TODO !!! 015-sdjpa-order-service test/domain
+// TODO 015-sdjpa-order-service test/domain
 
     /*
     @Test

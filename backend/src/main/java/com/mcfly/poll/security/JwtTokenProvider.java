@@ -23,18 +23,18 @@ public class JwtTokenProvider {
 
     public String generateToken(Authentication authentication) {
         final UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        final Date now = new Date();   // TODO !!! modern date
+        final Date now = new Date();   // TODO modern date
         final Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
         return Jwts.builder()
                 .setSubject(Long.toString(userPrincipal.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)      // TODO !!! deprecated
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)      // TODO deprecated
                 .compact();
     }
 
     public Long getUserIdFromJWT(String token) {
-        final Claims claims = Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJwt(token).getBody();        // TODO !!! deprecated
+        final Claims claims = Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJwt(token).getBody();        // TODO deprecated
         return Long.parseLong(claims.getSubject());
     }
 

@@ -1,4 +1,4 @@
-package com.mcfly.poll.repository;
+package com.mcfly.poll.repository.user_role;
 
 import com.mcfly.poll.domain.user_role.Role;
 import com.mcfly.poll.domain.user_role.RoleName;

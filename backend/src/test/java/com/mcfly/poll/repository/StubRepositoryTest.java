@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class StubRepositoryTest {
 
-    // TODO !!! 013-sdjpa-spring-data-jpa / 015-sdjpa-order-service test/repository
+    // TODO 013-sdjpa-spring-data-jpa / 015-sdjpa-order-service test/repository
 
     /*
 
