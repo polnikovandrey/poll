@@ -1,4 +1,4 @@
-package com.mcfly.poll.payload;
+package com.mcfly.poll.payload.user_role;
 
 public class JwtAuthenticationResponse {
 
