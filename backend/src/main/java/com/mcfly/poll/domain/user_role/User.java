@@ -1,5 +1,6 @@
-package com.mcfly.poll.domain;
+package com.mcfly.poll.domain.user_role;
 
+import com.mcfly.poll.domain.audit.DateAudit;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

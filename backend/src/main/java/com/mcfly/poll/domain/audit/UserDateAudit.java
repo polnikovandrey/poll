@@ -1,4 +1,4 @@
-package com.mcfly.poll.domain;
+package com.mcfly.poll.domain.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;

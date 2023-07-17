@@ -1,8 +1,8 @@
 package com.mcfly.poll.controller;
 
-import com.mcfly.poll.domain.Role;
-import com.mcfly.poll.domain.RoleName;
-import com.mcfly.poll.domain.User;
+import com.mcfly.poll.domain.user_role.Role;
+import com.mcfly.poll.domain.user_role.RoleName;
+import com.mcfly.poll.domain.user_role.User;
 import com.mcfly.poll.exception.AppException;
 import com.mcfly.poll.payload.ApiResponse;
 import com.mcfly.poll.payload.JwtAuthenticationResponse;

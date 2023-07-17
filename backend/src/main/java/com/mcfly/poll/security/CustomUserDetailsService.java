@@ -1,6 +1,6 @@
 package com.mcfly.poll.security;
 
-import com.mcfly.poll.domain.User;
+import com.mcfly.poll.domain.user_role.User;
 import com.mcfly.poll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

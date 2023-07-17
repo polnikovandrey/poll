@@ -1,4 +1,4 @@
-package com.mcfly.poll.domain;
+package com.mcfly.poll.domain.user_role;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.NaturalId;

@@ -1,6 +1,6 @@
 package com.mcfly.poll.repository;
 
-import com.mcfly.poll.domain.User;
+import com.mcfly.poll.domain.user_role.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

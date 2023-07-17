@@ -1,7 +1,7 @@
 package com.mcfly.poll.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mcfly.poll.domain.User;
+import com.mcfly.poll.domain.user_role.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
