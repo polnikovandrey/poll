@@ -2,7 +2,7 @@ drop table if exists roles;
 create table roles
 (
     id   bigint not null auto_increment primary key,
-    name tinyint unique
+    name enum ('ROLE_ADMIN','ROLE_USER') unique
 ) engine = InnoDB;
 drop table if exists users;
 create table users
