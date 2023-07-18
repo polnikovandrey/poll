@@ -4,9 +4,11 @@ import com.mcfly.poll.domain.user_role.User;
 import com.mcfly.poll.exception.ResourceNotFoundException;
 import com.mcfly.poll.payload.polling.PollingUserProfile;
 import com.mcfly.poll.payload.user_role.UserIdentityAvailability;
+import com.mcfly.poll.payload.user_role.UserSummary;
 import com.mcfly.poll.repository.polling.PollRepository;
 import com.mcfly.poll.repository.polling.VoteRepository;
 import com.mcfly.poll.repository.user_role.UserRepository;
+import com.mcfly.poll.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,10 @@ public class UserService {
 
     @Autowired
     VoteRepository voteRepository;
+
+    public UserSummary getUserSummary(UserPrincipal currentUser) {
+        return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
+    }
 
     public UserIdentityAvailability checkUsernameAvailability(String username) {
         final Boolean isAvailable = !userRepository.existsByUsername(username);

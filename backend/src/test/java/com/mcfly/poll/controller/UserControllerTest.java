@@ -2,6 +2,7 @@ package com.mcfly.poll.controller;
 
 import com.mcfly.poll.controller.user_role.UserController;
 import com.mcfly.poll.payload.user_role.UserIdentityAvailability;
+import com.mcfly.poll.payload.user_role.UserSummary;
 import com.mcfly.poll.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
@@ -32,28 +33,25 @@ public class UserControllerTest {
     }
 
     @Test
-    public void checkUsernameAvailabilitySecured() throws Exception {
+    public void checkUsernameAvailabilityUnauthorizedSecured() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/checkUsernameAvailability").param("username", RandomStringUtils.randomAlphabetic(5)))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
-
-    @WithMockUser(username="fakeUsername")
     @Test
-    public void checkExistingUsernameAvailabilityTest() throws Exception {
+    @WithMockUser(username="fakeUsername")
+    public void checkExistingUsernameAvailability() throws Exception {
         final String fakeExistingUsername = "Fake existing user";
         Mockito.when(userService.checkUsernameAvailability(fakeExistingUsername)).thenReturn(new UserIdentityAvailability(false));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/checkUsernameAvailability").param("username", fakeExistingUsername))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.available").value(false));
-
-        Mockito.when(userService.checkUsernameAvailability("No such username")).thenReturn(new UserIdentityAvailability(false));
     }
 
-    @WithMockUser(username="fakeUsername")
     @Test
-    public void checkAbsentUsernameAvailabilityTest() throws Exception {
+    @WithMockUser(username="fakeUsername")
+    public void checkAbsentUsernameAvailability() throws Exception {
         final String fakeAbsentUsername = "Fake absent user";
         Mockito.when(userService.checkUsernameAvailability(fakeAbsentUsername)).thenReturn(new UserIdentityAvailability(true));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/checkUsernameAvailability").param("username", fakeAbsentUsername))
@@ -62,15 +60,51 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.available").value(true));
     }
 
-    /*
-        TODO
-        @RequestMapping("/api/user")
+    @Test
+    public void checkEmailAvailabilityUnauthorizedSecured() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/checkEmailAvailability").param("email", RandomStringUtils.randomAlphabetic(5)))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
 
-        @GetMapping("/me")
-        @PreAuthorize("hasRole('USER')")
+    @Test
+    @WithMockUser(username="fakeUsername")
+    public void checkExistingEmailAvailability() throws Exception {
+        final String fakeExistingEmail = "fake.existing@email.com";
+        Mockito.when(userService.checkEmailAvailability(fakeExistingEmail)).thenReturn(new UserIdentityAvailability(false));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/checkEmailAvailability").param("email", fakeExistingEmail))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.available").value(false));
+    }
 
-        @GetMapping("/checkUsernameAvailability")
+    @Test
+    @WithMockUser(username="fakeUsername")
+    public void checkAbsentEmailAvailability() throws Exception {
+        final String fakeAbsentEmail = "fake.absent@email.com";
+        Mockito.when(userService.checkEmailAvailability(fakeAbsentEmail)).thenReturn(new UserIdentityAvailability(true));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/checkEmailAvailability").param("email", fakeAbsentEmail))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.available").value(true));
+    }
 
-        @GetMapping("/checkEmailAvailability")
-     */
+    @Test
+    public void checkMeUnauthorizedSecured() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/me"))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(username = "fakeUsername")
+    public void checkMe() throws Exception {
+        final UserSummary userSummary = new UserSummary(1L, "username", "name");
+        //noinspection DataFlowIssue
+        Mockito.when(userService.getUserSummary(null)).thenReturn(userSummary);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/me"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("username"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("name"));
+    }
 }

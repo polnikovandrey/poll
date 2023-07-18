@@ -6,7 +6,6 @@ import com.mcfly.poll.security.CurrentUser;
 import com.mcfly.poll.security.UserPrincipal;
 import com.mcfly.poll.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,9 +19,8 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/me")
-    @PreAuthorize("hasRole('USER')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
+        return userService.getUserSummary(currentUser);
     }
 
     @GetMapping("/checkUsernameAvailability")
