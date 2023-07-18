@@ -6,13 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class PollApplicationTests {
 
-    // TODO Controller Layer test (WebMVC test + MockMVC + Mockito)
-    // TODO Service Layer test
-    // TODO Repository Layer test
-    // TODO Domain Layer unit test
-
     @Test
     void contextLoads() {
     }
-
 }

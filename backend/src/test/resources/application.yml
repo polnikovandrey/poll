@@ -1,3 +1,9 @@
+app:
+  cors:
+    allowedOrigins: ""
+  jwtSecret: ""
+  jwtExpirationInMs: 604800000
+
 spring:
   datasource:
     password: password
