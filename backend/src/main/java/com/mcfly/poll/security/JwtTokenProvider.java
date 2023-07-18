@@ -1,6 +1,8 @@
 package com.mcfly.poll.security;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
+import java.time.Instant;
 import java.util.Date;
 
 @Component
@@ -23,24 +27,28 @@ public class JwtTokenProvider {
 
     public String generateToken(Authentication authentication) {
         final UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        final Date now = new Date();   // TODO modern date
-        final Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+        final Instant instantNow = Instant.now();
+        final Date nowDate = Date.from(instantNow);
+        final Date expiryDate = Date.from(instantNow.plusMillis(jwtExpirationInMs));
+        final Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
         return Jwts.builder()
                 .setSubject(Long.toString(userPrincipal.getId()))
-                .setIssuedAt(new Date())
+                .setIssuedAt(nowDate)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)      // TODO deprecated
+                .signWith(key)
                 .compact();
     }
 
     public Long getUserIdFromJWT(String token) {
-        final Claims claims = Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(token).getBody();        // TODO deprecated
+        final Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+        final Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
         return Long.parseLong(claims.getSubject());
     }
 
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(authToken).getBody();        // TODO deprecated
+            final Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(authToken).getBody();
             return true;
         } catch (SignatureException exception) {
             logger.error("Invalid JWT signature");
