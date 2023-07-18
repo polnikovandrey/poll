@@ -29,7 +29,6 @@ spring:
     time-zone: UTC
   jpa:
     database: mysql
-    defer-datasource-initialization: false
     hibernate:
       ddl-auto: validate
     properties:

@@ -1,17 +1,33 @@
 package com.mcfly.poll.repository;
 
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import com.mcfly.poll.domain.user_role.Role;
+import com.mcfly.poll.domain.user_role.RoleName;
+import com.mcfly.poll.repository.user_role.RoleRepository;
+import com.mcfly.poll.repository.user_role.UserRepository;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("local")
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @DataJpaTest
-@ComponentScan(basePackages = {"com.mcfly.poll"})
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class StubRepositoryTest {
+public class UserRoleRepositoryTest {
 
-    // TODO 013-sdjpa-spring-data-jpa / 015-sdjpa-order-service test/repository
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    UserRepository userRepository;
+
+    @Test
+    void testFindRoleByName() {
+        final Optional<Role> roleUserOptional = roleRepository.findByName(RoleName.ROLE_USER);
+        assertTrue(roleUserOptional.isPresent());
+        final Optional<Role> roleAdminOptional = roleRepository.findByName(RoleName.ROLE_ADMIN);
+        assertTrue(roleAdminOptional.isPresent());
+    }
+
 
     /*
 
